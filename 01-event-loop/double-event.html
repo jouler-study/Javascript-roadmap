@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Loop: Double Event Example</title>
+  <style>
+    #outer {
+      width: 300px;
+      height: 300px;
+      background: #90caf9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 40px auto;
+      border: 3px solid #1976d2;
+    }
+    #inner {
+      width: 150px;
+      height: 150px;
+      background: #ffcc80;
+      border: 3px solid #f57c00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="outer">
+    <div id="inner">Click Me</div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      function handleEvent(e) {
+        console.log(`Clicked on: ${e.currentTarget?.id} (macrotask: UI event)`);
+
+        setTimeout(() => {
+          console.log(`setTimeout inside ${e.currentTarget?.id} (macrotask)`);
+        }, 0);
+
+        Promise.resolve().then(() => {
+          console.log(`Promise inside ${e.currentTarget?.id} (microtask)`);
+        });
+
+        console.log(`End of ${e.currentTarget?.id} handler (sync)`);
+      }
+
+      // Both outer and inner have the same handler
+      document.getElementById("outer").addEventListener("click", handleEvent);
+      document.getElementById("inner").addEventListener("click", handleEvent);
+
+      // Optional: trigger a double event programmatically after 1s
+      // setTimeout(() => {
+      //   document.getElementById("inner").click();
+      // }, 1000);
+
+      /*
+        Execution order when #inner is clicked (either by user or programmatically):
+
+        1. #inner click handler runs (macrotask: UI event)
+           - logs "Clicked on: inner"
+           - schedules setTimeout for inner
+           - schedules Promise for inner
+           - logs "End of inner handler"
+        2. Microtasks for inner run: "Promise inside inner"
+        3. #outer click handler runs (event bubbles up, macrotask: UI event)
+           - logs "Clicked on: outer"
+           - schedules setTimeout for outer
+           - schedules Promise for outer
+           - logs "End of outer handler"
+        4. Microtasks for outer run: "Promise inside outer"
+        5. Macrotasks run in order:
+           - "setTimeout inside inner"
+           - "setTimeout inside outer"
+
+        Expected output:
+        Clicked on: inner (macrotask: UI event)
+        End of inner handler (sync)
+        Promise inside inner (microtask)
+        Clicked on: outer (macrotask: UI event)
+        End of outer handler (sync)
+        Promise inside outer (microtask)
+        setTimeout inside inner (macrotask)
+        setTimeout inside outer (macrotask)
+      */
+    });
+  </script>
+</body>
+</html>

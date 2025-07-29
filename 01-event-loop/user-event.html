@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Event Loop: User Event Example</title>
+  </head>
+  <body>
+    <button id="btn">Click Me</button>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Synchronous code
+        console.log("Page loaded");
+
+        // Register a click event listener (goes to Web APIs)
+        document.getElementById("btn").addEventListener("click", function () {
+          console.log("Button clicked (macrotask: UI event)");
+
+          setTimeout(() => {
+            console.log("setTimeout inside click (macrotask)");
+          }, 0);
+
+          Promise.resolve().then(() => {
+            console.log("Promise inside click (microtask)");
+          });
+
+          console.log("End of click handler (sync)");
+        });
+
+        // Synchronous code continues
+        console.log("Listener attached");
+      });
+      /*
+      Execution order when button is clicked:
+      1. 'Page loaded' (sync)
+      2. 'Listener attached' (sync)
+      -- User clicks button --
+      3. 'Button clicked (macrotask: UI event)' (macrotask)
+      4. setTimeout registered (Web API)
+      5. Promise registered (microtask)
+      6. 'End of click handler (sync)' (sync)
+      7. Microtasks run: 'Promise inside click (microtask)'
+      8. Macrotask runs: 'setTimeout inside click (macrotask)'
+    
+      Expected output:
+      Page loaded
+      Listener attached
+      [user clicks button]
+      Button clicked (macrotask: UI event)
+      End of click handler (sync)
+      Promise inside click (microtask)
+      setTimeout inside click (macrotask)
+    */
+    </script>
+  </body>
+</html>

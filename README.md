@@ -6,9 +6,9 @@ This repository is designed to help review and reinforce fundamental JavaScript 
 
 ## Topics Covered
 
+- [01-Event Loop](01-event-loop/README.md) - Understanding the JavaScript event loop, call stack, and asynchronous programming.
 - Closures
 - Asynchronous JavaScript (Promises, async/await)
-- Event Loop
 - Scopes
 - Hoisting
 - Prototypes
