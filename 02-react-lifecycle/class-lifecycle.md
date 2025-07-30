@@ -105,5 +105,5 @@ class DemoLifecycle extends React.Component {
 ## References
 
 - [React Docs: State and Lifecycle](https://react.dev/learn/state-a-components-memory)
-- [React Docs: Lifecycle Methods](https://legacy.reactjs.org/docs/react-component.html)
+- [React Docs: Lifecycle Methods](https://react.dev/reference/react/Component#adding-lifecycle-methods-to-a-class-component)
 - [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
