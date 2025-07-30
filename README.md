@@ -7,6 +7,9 @@ This repository is designed to help review and reinforce fundamental JavaScript 
 ## Topics Covered
 
 - [01-Event Loop](01-event-loop/README.md) - Understanding the JavaScript event loop, call stack, and asynchronous programming.
+- React Lifecycle - Understanding React class component lifecycle methods and their order of execution.
+  - [class-lifecycle.md](02-react-lifecycle/class-lifecycle.md) - Detailed explanation of React class component lifecycle methods.
+  - [functional-lifecycle.md](02-react-lifecycle/functional-lifecycle.md) -
 - Closures
 - Asynchronous JavaScript (Promises, async/await)
 - Scopes
